@@ -6,6 +6,10 @@
 
 <img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/32e13662-265d-40bc-a3e3-ecd54d20b990" />
 
+<p align = "center">Configs </p>
+<img width="2559" height="1438" alt="image" src="https://github.com/user-attachments/assets/4d8f1cb1-0bd2-4110-a6d1-856ee0c6625e" />
+
+
 ## Acknowledgments
 
 * Menu translations: 
