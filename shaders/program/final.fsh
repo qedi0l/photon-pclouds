@@ -32,10 +32,34 @@ uniform float frameTimeCounter;
 uniform sampler2D shadowtex0;
 #endif
 
+#ifdef POLLUTION_FOG
+    uniform sampler2D noisetex;
+    uniform vec3 cameraPosition;
+    uniform int worldTime;
+    uniform mat4 gbufferProjection;
+// The following are already declared under DISTANCE_VIEW, so only declare
+// them here when that program option is off (to avoid duplicate uniforms).
+        #ifndef DISTANCE_VIEW
+            uniform sampler2D depthtex0;
+            uniform mat4 gbufferProjectionInverse;
+            uniform mat4 gbufferModelViewInverse;
+            uniform float far;
+            uniform float near;
+            uniform vec2 view_res;
+        #ifdef TAA
+            uniform vec2 taa_offset;
+        #endif
+    #endif
+#endif
+
 #include "/include/utility/bicubic.glsl"
 #include "/include/utility/color.glsl"
 #include "/include/utility/dithering.glsl"
 #include "/include/utility/text_rendering.glsl"
+#ifdef POLLUTION_FOG
+    #include "/include/utility/space_conversion.glsl"
+    #include "/include/pollution_fog.glsl"
+#endif
 
 #ifdef DISTANCE_VIEW
 uniform sampler2D depthtex0;
@@ -284,6 +308,31 @@ void main() {
     }
 
     fragment_color = dither_8bit(fragment_color, bayer16(vec2(texel)));
+
+#ifdef POLLUTION_FOG
+    // Render localized volumetric pollution clouds (PCloudsMod SSBO).
+    {
+        float depth =
+            texelFetch(depthtex0, ivec2(uv * view_res * taau_render_scale), 0).x;
+
+        vec3 position_view =
+            screen_to_view_space(gbufferProjectionInverse, vec3(uv, depth), false);
+
+        // Distance to the opaque surface. For sky pixels use the effective
+        // far plane (combined_far), which accounts for LoD mods (Voxy /
+        // Distant Horizons) so pollution clouds can render out to the LoD
+        // render distance instead of being clipped at the vanilla far plane.
+        float sceneDist = (depth == 1.0) ? combined_far : length(position_view);
+
+        float dither =
+            fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+
+        vec4 fog = pollution_get_volumetric_fog(position_view, dither, sceneDist);
+
+        // fog.a is absorbance, so (1.0 - fog.a) is the fog opacity.
+        fragment_color = mix(fragment_color, fog.rgb, 1.0 - fog.a);
+    }
+#endif
 
 #if DEBUG_VIEW == DEBUG_VIEW_SAMPLER
     if (clamp(texel, ivec2(0), ivec2(textureSize(DEBUG_SAMPLER, 0))) == texel) {

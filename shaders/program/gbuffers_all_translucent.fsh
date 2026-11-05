@@ -12,6 +12,8 @@
 
 #include "/include/global.glsl"
 
+in float mcentity;
+
 #ifdef PROGRAM_GBUFFERS_WATER
 layout(location = 0) out vec4 refraction_data;
 layout(location = 1) out vec4 fragment_color;
@@ -359,6 +361,13 @@ vec4 draw_nether_portal(vec3 direction_world, float layer_dist) {
 #endif
 
 void main() {
+    // Hide AdPother blocks
+    #ifdef POLLUTANT_BLOCKS_HIDE
+        if (mcentity == 11001) {
+            discard;
+        }
+    #endif
+
     vec2 coord = gl_FragCoord.xy * view_pixel_size * rcp(taau_render_scale);
 
     // Clip to TAAU viewport

@@ -126,6 +126,14 @@ Material get_water_material(
 }
 
 void voxy_emitFragment(VoxyFragmentParameters parameters) {
+    // hide AdPother blocks
+
+    #ifdef POLLUTANT_BLOCKS_HIDE
+        if (parameters.customId == 11001) {
+            discard;
+        }
+    #endif
+
     vec2 coord = gl_FragCoord.xy * view_pixel_size * rcp(taau_render_scale);
 
     // Discard if vanilla opaque geometry is in front of this fragment, so

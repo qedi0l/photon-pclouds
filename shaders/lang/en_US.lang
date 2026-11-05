@@ -103,6 +103,10 @@ option.DESERT_SANDSTORM                = Desert Sandstorm
 option.DESERT_SANDSTORM.comment        = Sandstorm during rain in desert biome
 option.END_GLOW                        = End Glow
 option.END_GLOW.comment                = Wavery glowing effect in the End. Requires Volumetric Fog
+option.POLLUTION_FOG                   = Pollution Clouds
+option.POLLUTION_FOG.comment           = Pollution Clouds rendering
+option.POLLUTANT_BLOCKS_HIDE           = Hide Pollutant blocks
+option.POLLUTANT_BLOCKS_HIDE.comment   = Pollutant block rendering toggle
 
 # Weather
 option.RANDOM_WEATHER_VARIATION            = Random Variation

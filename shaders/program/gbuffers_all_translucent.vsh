@@ -16,6 +16,7 @@ out vec2 uv;
 out vec3 position_view;
 out vec3 position_scene;
 out vec4 tint;
+out float mcentity;
 
 #if defined COLORWHEEL
 vec2 light_levels;
@@ -221,4 +222,6 @@ void main() {
 #endif
 
     gl_Position = position_clip;
+
+    mcentity = mc_Entity.x;
 }

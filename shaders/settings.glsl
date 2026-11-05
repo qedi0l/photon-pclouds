@@ -15,7 +15,7 @@
 const int noiseTextureResolution = 512;
 
 const bool shadowHardwareFiltering1 = true;
-const int shadowMapResolution       = 2048; // [1024 1536 2048 3072 4096 6144 8192 16384]
+const int shadowMapResolution       = 2048; // [512 724 1024 1536 2048 3072 4096 6144 8192 16384]
 const float shadowDistance          = 128.0; // [64.0 80.0 96.0 112.0 128.0 144.0 160.0 176.0 192.0 208.0 224.0 240.0 256.0 320.0 384.0 512.0 768.0 1024.0 2048.0 4096.0]
 const float shadowDistanceRenderMul = 1.0;
 const float shadowIntervalSize      = 2.0;
@@ -38,6 +38,10 @@ const float wetnessHalflife         = 70.0;
   #define DESERT_SANDSTORM
   #define SEA_LEVEL 63.0 // [-60.0 4.0 63.0]
   #define END_GLOW
+
+  // Pollution clouds
+  #define POLLUTION_FOG
+  #define POLLUTANT_BLOCKS_HIDE
 
 // Weather
 
