@@ -2,9 +2,9 @@
 
 <h1 align = "center">Photon Shaders</h1>
 
-<p align = "center">A gameplay-focused shader pack for Minecraft</p>
+<p align = "center">Pollution Clouds Mod compatible version</p>
 
-![Screenshot](docs/images/rainbow.png)
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/32e13662-265d-40bc-a3e3-ecd54d20b990" />
 
 ## Acknowledgments
 
